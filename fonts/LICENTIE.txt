@@ -1,0 +1,3 @@
+Lettertype: Inter en Inter Display (Rasmus Andersson)
+Licentie: SIL Open Font License 1.1 — vrij te gebruiken, ook op websites.
+https://rsms.me/inter/

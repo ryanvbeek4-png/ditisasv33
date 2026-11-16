@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dit is ASV’33 — Ontdek het ASV’33 van morgen</title>
+<meta name="description" content="Bekijk de plannen voor sportpark De Hut van ASV’33 in Aarle-Rixtel. Een schoolproject.">
+<meta name="theme-color" content="#9e1b26">
+<link rel="icon" type="image/png" href="img/logo-asv33.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#locaties">Direct naar de locaties</a>
+
+<header class="top">
+  <div class="top__in">
+    <a class="merk" href="#overzicht" aria-label="Dit is ASV’33 — naar het overzicht">
+      <img src="img/logo-asv33.png" width="522" height="587" alt="Logo ASV’33 Aarle-Rixtel">
+      <span class="merk__tekst"><strong>Dit is ASV’33</strong><span>Sportpark De Hut · Aarle-Rixtel</span></span>
+    </a>
+    <button class="knop knop--licht" id="introKnop" type="button" hidden>
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      Bekijk de intro
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="intro" aria-labelledby="titel">
+    <h1 id="titel" data-tekst="titel" data-bewerk='["site","titel"]'>Ontdek het ASV’33 van morgen</h1>
+    <p class="intro__sub" data-tekst="ondertitel" data-bewerk='["site","ondertitel"]'>Bekijk onze plannen voor sportpark De Hut.</p>
+    <p class="intro__instructie"><span class="tik" aria-hidden="true"></span><span data-tekst="instructie" data-bewerk='["site","instructie"]'>Tik op een locatie en ontdek wat we willen veranderen.</span></p>
+  </section>
+
+  <section class="kaartvak" aria-label="Interactieve luchtfoto van sportpark De Hut">
+    <div class="kaart" id="kaart" tabindex="0" aria-describedby="kaartHulp">
+      <div class="kaart__laag" id="kaartLaag">
+        <img id="kaartBeeld" alt="" draggable="false" decoding="async">
+      </div>
+      <div class="kaart__markers" id="markers"></div>
+      <div class="kaart__bediening">
+        <button class="kb" id="zoomIn" type="button" aria-label="Inzoomen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg></button>
+        <button class="kb" id="zoomUit" type="button" aria-label="Uitzoomen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14v2H5z"/></svg></button>
+      </div>
+      <button class="kaart__heel knop" id="heelPark" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg>
+        Hele sportpark
+      </button>
+      <p class="kaart__bron" data-tekst="bron">Luchtfoto: Google Maps</p>
+      <p class="kaart__hint" id="kaartHint" role="status" aria-live="polite"></p>
+      <p class="sr" id="kaartHulp">Gebruik de pijltjestoetsen om de kaart te verschuiven en plus of min om te zoomen. Met Tab ga je langs de locaties.</p>
+    </div>
+  </section>
+
+  <section class="locaties" id="locaties" aria-labelledby="locTitel">
+    <div class="locaties__kop">
+      <h2 id="locTitel">De rondleiding</h2>
+      <button class="knop knop--rood" id="startRonde" type="button">Start bij locatie 1
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6z"/></svg>
+      </button>
+    </div>
+    <ol class="kaarten" id="kaarten"></ol>
+  </section>
+</main>
+
+<footer class="voet">
+  <p class="voet__disclaimer" data-tekst="disclaimer" data-bewerk='["site","disclaimer"]'>Ontwerpvoorstel voor ASV’33 — de getoonde aanpassingen zijn nog niet gerealiseerd.</p>
+  <p class="voet__klein"><span data-tekst="projectnaam">Dit is ASV’33</span> · schoolproject · <span data-tekst="bron">Luchtfoto: Google Maps</span></p>
+</footer>
+
+<!-- Detailvenster -->
+<div class="venster" id="venster" hidden>
+  <div class="venster__achter" data-sluit></div>
+  <div class="venster__paneel" role="dialog" aria-modal="true" aria-labelledby="vensterTitel" tabindex="-1">
+    <div class="venster__kop">
+      <p class="venster__stap" id="vensterStap"></p>
+      <button class="sluit" type="button" data-sluit aria-label="Sluit locatievenster">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg>
+      </button>
+    </div>
+    <div class="venster__inhoud" id="vensterInhoud"></div>
+  </div>
+</div>
+
+<!-- Vergroting -->
+<div class="lichtbak" id="lichtbak" hidden role="dialog" aria-modal="true" aria-label="Vergrote afbeelding">
+  <div class="lichtbak__beeld" id="lbBeeld"></div>
+  <p class="lichtbak__tekst" id="lbTekst"></p>
+  <button class="lb-knop lb-sluit" type="button" id="lbSluit" aria-label="Sluit vergroting"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg></button>
+  <button class="lb-knop lb-vorige" type="button" id="lbVorige" aria-label="Vorige afbeelding"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 6.4 14 5l-7 7 7 7 1.4-1.4L9.8 12z"/></svg></button>
+  <button class="lb-knop lb-volgende" type="button" id="lbVolgende" aria-label="Volgende afbeelding"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 17.6 10 19l7-7-7-7-1.4 1.4 5.6 5.6z"/></svg></button>
+</div>
+
+<!-- Introvideo (alleen zichtbaar als er een video is ingesteld) -->
+<div class="lichtbak" id="videoVak" hidden role="dialog" aria-modal="true" aria-label="Introvideo">
+  <div class="lichtbak__beeld" id="videoHouder"></div>
+  <button class="lb-knop lb-sluit" type="button" id="videoSluit" aria-label="Sluit video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg></button>
+</div>
+
+<noscript><p class="geenjs">Deze website heeft JavaScript nodig voor de interactieve kaart. Zet JavaScript aan om de plannen te bekijken.</p></noscript>
+
+<script src="inhoud.js"></script>
+<script src="app.js"></script>
+<script src="bewerken.js"></script>
+</body>
+</html>
