@@ -67,7 +67,7 @@ body.zonder-scroll{overflow:hidden}
 /* --- kaart --- */
 .kaartvak{max-width:1320px;margin:0 auto;padding:0 18px}
 .kaart{position:relative;height:min(64svh,620px);min-height:360px;border-radius:var(--radius);overflow:hidden;background:#3d4a35;
-  box-shadow:var(--schaduw);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;outline-offset:4px}
+  box-shadow:var(--schaduw);touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;outline-offset:4px}
 .kaart.sleept{cursor:grabbing}
 .kaart__laag{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
 .kaart__laag img{max-width:none;width:941px;height:1672px;pointer-events:none}
@@ -124,7 +124,13 @@ body.zonder-scroll{overflow:hidden}
   transform:translateX(102%);transition:transform .42s cubic-bezier(.2,.8,.2,1);outline:none}
 .venster.open .venster__paneel{transform:none}
 .venster__kop{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px 10px 22px;border-bottom:1px solid var(--lijn);background:#fff;flex:none}
-.venster__stap{margin:0;font-size:.85rem;font-weight:700;color:var(--rood);text-transform:uppercase;letter-spacing:.08em}
+.kop-nav{display:flex;gap:8px;margin-left:auto}
+.kop-knop{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:6px 14px;border-radius:999px;border:2px solid var(--lijn);background:#fff;font-weight:700;font-size:.9rem;cursor:pointer}
+.kop-knop:hover{border-color:var(--antraciet)}
+.kop-knop--rood{background:var(--rood);border-color:var(--rood);color:#fff}
+.kop-knop--rood:hover{background:var(--rood-donker);border-color:var(--rood-donker)}
+.venster__stap .kort{display:none}
+.venster__stap{margin:0;white-space:nowrap;font-size:.85rem;font-weight:700;color:var(--rood);text-transform:uppercase;letter-spacing:.08em}
 .sluit{width:48px;height:48px;border-radius:50%;border:0;background:var(--gebroken);display:grid;place-items:center;cursor:pointer}
 .sluit:hover{background:var(--lijn)}
 .sluit svg{width:24px;height:24px}
@@ -200,7 +206,7 @@ body.zonder-scroll{overflow:hidden}
 .d-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:22px 22px 10px}
 .d-nav .knop{justify-content:center;width:100%}
 .d-nav .knop span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.d-terug{padding:0 22px 28px}
+.d-terug{padding:24px 22px 28px}
 .d-terug .knop{width:100%;justify-content:center}
 .d-disclaimer{padding:0 22px 26px;margin:0;font-size:.8rem;color:var(--grijs)}
 
@@ -209,11 +215,12 @@ body.zonder-scroll{overflow:hidden}
 
 /* --- lichtbak --- */
 .lichtbak{position:fixed;inset:0;z-index:80;background:rgba(12,13,15,.94);display:flex;flex-direction:column}
-.lichtbak__beeld{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:56px 10px 10px;touch-action:pan-x pan-y pinch-zoom}
-.lichtbak__beeld img{max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in}
-.lichtbak__beeld.zoom{display:block;padding:0}
-.lichtbak__beeld.zoom img{max-width:none;max-height:none;width:auto;cursor:zoom-out;margin:auto}
+.lichtbak__beeld{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:56px 10px 10px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.lichtbak__beeld img{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center;will-change:transform;-webkit-user-drag:none}
+.carrousel__beeld{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.carrousel__beeld img{-webkit-user-drag:none}
 .lichtbak__beeld video{max-width:100%;max-height:100%}
+.lichtbak__hint{color:rgba(255,255,255,.65);text-align:center;margin:0 0 4px;font-size:.8rem}
 .lichtbak__tekst{color:#fff;text-align:center;margin:0;padding:10px 70px 18px;font-size:.92rem}
 .lb-knop{position:absolute;width:50px;height:50px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;display:grid;place-items:center;cursor:pointer}
 .lb-knop:hover{background:rgba(255,255,255,.26)}
@@ -244,9 +251,12 @@ body.zonder-scroll{overflow:hidden}
 }
 @media (max-width:560px){
   body{font-size:16.5px}
+  .venster__stap .lang{display:none}.venster__stap .kort{display:inline}
+  .kop-knop{padding:6px 10px;font-size:.85rem}
+  .venster__kop{gap:6px;padding-left:14px;padding-right:8px}
   .intro{padding-top:22px}
   .kaartvak{padding:0 10px}
-  .kaart{border-radius:12px;height:70svh;min-height:400px}
+  .kaart{border-radius:12px;height:62svh;min-height:380px}
   .intro h1{font-size:1.95rem}
   .intro__instructie{margin-top:.6em}
   .locaties{padding-left:12px;padding-right:12px}

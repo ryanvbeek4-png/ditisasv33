@@ -48,7 +48,7 @@
       </button>
       <p class="kaart__bron" data-tekst="bron">Luchtfoto: Google Maps</p>
       <p class="kaart__hint" id="kaartHint" role="status" aria-live="polite"></p>
-      <p class="sr" id="kaartHulp">Gebruik de pijltjestoetsen om de kaart te verschuiven en plus of min om te zoomen. Met Tab ga je langs de locaties.</p>
+      <p class="sr" id="kaartHulp">Sleep de kaart met je vinger of muis. Gebruik de pijltjestoetsen om de kaart te verschuiven en plus of min om te zoomen. Met Tab ga je langs de locaties.</p>
     </div>
   </section>
 
@@ -74,6 +74,10 @@
   <div class="venster__paneel" role="dialog" aria-modal="true" aria-labelledby="vensterTitel" tabindex="-1">
     <div class="venster__kop">
       <p class="venster__stap" id="vensterStap"></p>
+      <nav class="kop-nav" aria-label="Rondleiding">
+        <button type="button" class="kop-knop" id="kopVorige"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 6.4 14 5l-7 7 7 7 1.4-1.4L9.8 12z"/></svg><span>Vorige</span></button>
+        <button type="button" class="kop-knop kop-knop--rood" id="kopVolgende"><span>Volgende</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 17.6 10 19l7-7-7-7-1.4 1.4 5.6 5.6z"/></svg></button>
+      </nav>
       <button class="sluit" type="button" data-sluit aria-label="Sluit locatievenster">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg>
       </button>
@@ -86,6 +90,7 @@
 <div class="lichtbak" id="lichtbak" hidden role="dialog" aria-modal="true" aria-label="Vergrote afbeelding">
   <div class="lichtbak__beeld" id="lbBeeld"></div>
   <p class="lichtbak__tekst" id="lbTekst"></p>
+  <p class="lichtbak__hint">Sleep om rond te kijken · dubbeltik of knijp om te zoomen · veeg voor de volgende foto</p>
   <button class="lb-knop lb-sluit" type="button" id="lbSluit" aria-label="Sluit vergroting"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg></button>
   <button class="lb-knop lb-vorige" type="button" id="lbVorige" aria-label="Vorige afbeelding"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 6.4 14 5l-7 7 7 7 1.4-1.4L9.8 12z"/></svg></button>
   <button class="lb-knop lb-volgende" type="button" id="lbVolgende" aria-label="Volgende afbeelding"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 17.6 10 19l7-7-7-7-1.4 1.4 5.6 5.6z"/></svg></button>

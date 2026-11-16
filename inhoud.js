@@ -58,29 +58,29 @@ window.ASV = {
       "oplevering": "Een verzorgder en herkenbaarder veld met een duidelijke ASV’33-uitstraling.",
       "onderdelen": [
         {
-          "naam": "Ballenvangerpalen",
-          "uitleg": "Onderaan rood, bovenaan wit.",
-          "type": "wissel",
-          "huidig": {
-            "bestand": "veld-c-huidig-ballenvanger",
-            "alt": "Huidige situatie: doel met ballenvanger op metalen palen in de oorspronkelijke kleur."
-          },
-          "ontwerp": {
-            "bestand": "veld-c-ontwerp-ballenvanger",
-            "alt": "Ontwerp: ballenvangerpalen onderaan rood en bovenaan wit, met een rood-wit doelnet."
-          }
-        },
-        {
-          "naam": "Doelnetten",
-          "uitleg": "De twee doelnetten worden rood-wit.",
+          "naam": "Doel linkerkant",
+          "uitleg": "Rood-wit doelnet en ballenvangerpalen die onderaan rood en bovenaan wit zijn.",
           "type": "wissel",
           "huidig": {
             "bestand": "veld-c-huidig-doel",
-            "alt": "Huidige situatie: doel met wit net voor de bomenrij."
+            "alt": "Huidige situatie: het doel aan de linkerkant van veld C, voor de bomenrij, met een wit net."
           },
           "ontwerp": {
             "bestand": "veld-c-ontwerp-doel",
-            "alt": "Ontwerp: doel met rood-wit net en rood-witte palen van de ballenvanger."
+            "alt": "Ontwerp: het doel aan de linkerkant met een rood-wit net en rood-witte ballenvangerpalen."
+          }
+        },
+        {
+          "naam": "Doel rechterkant",
+          "uitleg": "Rood-wit doelnet en ballenvangerpalen die onderaan rood en bovenaan wit zijn.",
+          "type": "wissel",
+          "huidig": {
+            "bestand": "veld-c-huidig-ballenvanger",
+            "alt": "Huidige situatie: het doel aan de rechterkant van veld C met de hoge ballenvanger op metalen palen."
+          },
+          "ontwerp": {
+            "bestand": "veld-c-ontwerp-ballenvanger",
+            "alt": "Ontwerp: het doel aan de rechterkant met een rood-wit net en ballenvangerpalen onderaan rood en bovenaan wit."
           }
         },
         {
