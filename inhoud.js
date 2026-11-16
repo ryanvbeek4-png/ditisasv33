@@ -1,9 +1,11 @@
 /* =====================================================================
    DIT IS ASV'33 — ALLE INHOUD OP ÉÉN PLEK
    ---------------------------------------------------------------------
-   Makkelijkst: pas dit aan met je eigen (privé) bewerkpagina en plak het
-   resultaat hier. Met de hand kan ook: verander alleen tekst tussen de
-   aanhalingstekens en laat komma's en haakjes staan.
+   Makkelijkst: open index.html op je eigen pc, klik op ‘Bewerken’,
+   pas teksten en foto's aan en klik op ‘Opslaan’. Dit bestand wordt dan
+   automatisch bijgewerkt.
+   Met de hand kan ook: verander alleen tekst tussen de aanhalingstekens
+   en laat komma's en haakjes staan.
    - Afbeeldingen staan in de map img/. "naam" betekent img/naam.webp met
      een kleine versie img/naam-klein.webp. Een naam mét extensie
      (bijv. "nieuwe-foto.jpg") gebruikt precies dat ene bestand.
@@ -39,7 +41,7 @@ window.ASV = {
     {
       "id": "veld-c",
       "naam": "Veld C",
-      "titel": "Veld C in de clubkleuren",
+      "titel": "Veld C met extra kleur",
       "x": 0.375,
       "y": 0.308,
       "label": {
@@ -70,13 +72,13 @@ window.ASV = {
         "alt": "Ontwerp van veld C: de ballenvangerpalen zijn onderaan rood en bovenaan wit, het doel heeft een rood-wit net."
       },
       "kaartje": "veld-c-ontwerp-doel",
-      "watVeranderen": "We schilderen de ballenvangerpalen rood-wit, vervangen de twee doelnetten door rood-witte netten en schilderen de twee bestaande dug-outs rood.",
-      "waarom": "We willen dat ook veld C duidelijk bij ASV’33 hoort. Door de clubkleuren terug te laten komen, ontstaat meer samenhang met de rest van het sportpark. We behouden de bestaande dug-outs en knappen ze op, zodat we kosten beperken en bestaande voorzieningen hergebruiken.",
-      "oplevering": "Een verzorgder en herkenbaarder veld met een duidelijke ASV’33-uitstraling.",
+      "watVeranderen": "We schilderen de ballenvangerpalen rood wit, vervangen de twee doelnetten door rood witte netten en schilderen de twee bestaande dug-outs rood. Ook op het laatste veld zul je dan veel meer opvulling zien dan alleen een veld met belijning en twee groene dug outs...",
+      "waarom": "We willen dat ook veld C duidelijk bij ASV’33 hoort, door onze clubkleuren terug te laten komen, ontstaat meer samenhang met de rest van het sportpark. We behouden de bestaande dug-outs en knappen ze enkel op, zodat we kosten beperken en bestaande voorzieningen hergebruiken.",
+      "oplevering": "Een verzorgder en herkenbaarder veld met een duidelijke ASV’33 uitstraling. En eerlijk is eerlijk, de verbetering is duidelijk zichtbaar.",
       "onderdelen": [
         {
           "naam": "Doel linkerkant",
-          "uitleg": "Rood-wit doelnet en ballenvangerpalen die onderaan rood en bovenaan wit zijn.",
+          "uitleg": "Een Rood Wit doelnet met rood witte palen, een duidelijke verbetering aan een veld dat heel neutraal is.",
           "type": "wissel",
           "huidig": {
             "bestand": "veld-c-huidig-doel",
@@ -89,7 +91,7 @@ window.ASV = {
         },
         {
           "naam": "Doel rechterkant",
-          "uitleg": "Rood-wit doelnet en ballenvangerpalen die onderaan rood en bovenaan wit zijn.",
+          "uitleg": "Een Rood Wit doelnet met rood witte palen, een duidelijke verbetering aan een veld dat heel neutraal is.",
           "type": "wissel",
           "huidig": {
             "bestand": "veld-c-huidig-ballenvanger",
@@ -102,7 +104,7 @@ window.ASV = {
         },
         {
           "naam": "Dug-outs",
-          "uitleg": "De twee bestaande dug-outs worden rood geschilderd.",
+          "uitleg": "De twee bestaande dug-outs worden rood geschilderd, hierdoor krijg je toch meer de indruk dat het een bij behorend veld i.",
           "type": "schuif",
           "huidig": {
             "bestand": "veld-c-vergelijk-dugouts-voor",
@@ -118,7 +120,7 @@ window.ASV = {
     {
       "id": "tribune",
       "naam": "Tribune",
-      "titel": "Clubgevoel langs de tribune",
+      "titel": "Clubgevoel terug te zien op foto`s",
       "x": 0.6716,
       "y": 0.4224,
       "label": {
@@ -128,11 +130,11 @@ window.ASV = {
       },
       "kaartZoom": 2,
       "kaartje": "tribune-paneel-team",
-      "watVeranderen": "We plaatsen zes grote horizontale fotopanelen achter de tribune. De beelden krijgen een samenhangende stijl met zwart-wit en rode accenten.",
-      "waarom": "De beelden laten verschillende kanten van de vereniging zien: de voorbereiding in de kleedkamer, voetbal op het veld, supporters en bijzondere clubmomenten. Zo brengen we de verbondenheid tussen spelers, supporters en generaties in beeld.",
-      "oplevering": "Een tribune met meer karakter en een herkenbare uitstraling. De beelden geven aanleiding tot gesprekken en laten zien wat de club voor haar leden betekent.",
+      "watVeranderen": "Hier is geen vervanging maar een toevoeging, de tribune is duidelijk ASV'33, maar wat naar mijn mening mist is de geschiedenis, een club van 93 jaar oud heeft vele mooie momenten beleefd!",
+      "waarom": "De beelden laten verschillende kanten van de vereniging zien: de voorbereiding in de kleedkamer, voetbal op het veld, supporters en bijzondere clubmomenten. Zo brengen we de verbondenheid tussen spelers, supporters en generaties in beeld. Het verbind club met dorp en dat is alleen maar goed, iets waar een Aarlese trots op mag zijn.",
+      "oplevering": "Een tribune met meer karakter en een herkenbare uitstraling, De beelden geven aanleiding tot gesprekken en laten zien wat de club voor haar leden betekent.",
       "wandTitel": "Voor en door ASV’ers",
-      "herkomstUitleg": "De historische sfeerbeelden zijn met AI gemaakt. Het zijn reconstructies, geen originele archieffoto’s. Echte clubfoto’s staan apart aangegeven.",
+      "herkomstUitleg": "De historische sfeerbeelden zijn met AI gemaakt. Het zijn reconstructies, geen originele archieffoto’s. Echte clubfoto’s staan apart aangegeven. Met deze foto proberen we in te spelen op wat de mensen van de club vroegen, een zwarte witte foto met rode accenten.",
       "panelen": [
         {
           "titel": "De voorbereiding in de kleedkamer",
@@ -156,14 +158,14 @@ window.ASV = {
           "alt": "Zwart-wit sfeerbeeld met rode accenten: supporters van verschillende generaties leunen op het hek langs het veld."
         },
         {
-          "titel": "Samen vieren",
+          "titel": "Samen vieren, samen plezier",
           "herkomst": "echt",
           "paneel": "tribune-paneel-team",
           "mockup": "tribune-mockup-team",
           "alt": "Echte clubfoto in zwart-wit met rode accenten: spelers van ASV’33 vieren samen een doelpunt."
         },
         {
-          "titel": "Een bijzonder clubmoment",
+          "titel": "Tribune opening",
           "herkomst": "ai",
           "paneel": "tribune-paneel-clubmoment",
           "mockup": "tribune-mockup-clubmoment",
@@ -214,10 +216,10 @@ window.ASV = {
         "alt": "Ontwerp van de vrijwilligerswand: een rood bord met achttien portretten, namen en functies op de bakstenen muur."
       },
       "kaartje": "vrijwilligers-ontwerp",
-      "watVeranderen": "Er komt een vrijwilligerswand met portretten, namen en functies. Het bord krijgt een rode basis, donkere portretachtergronden en een uniforme opmaak.",
-      "waarom": "Vrijwilligers zorgen ervoor dat de vereniging dagelijks kan functioneren. Met deze wand geven we hun inzet een zichtbare plek en maken we duidelijk wie welke rol binnen de club vervult.",
+      "watVeranderen": "Er komt een vrijwilligerswand met portretten, namen en functies. Het bord krijgt een rode basis, donkere portretachtergronden en een uniforme opmaak. Een lege muur die zijn belangrijke vulling wel kan krijgen, en dan uiteraard voor vrijwilligers!",
+      "waarom": "Vrijwilligers zorgen ervoor dat de vereniging dagelijks kan functioneren, met deze wand geven we hun inzet een zichtbare plek en maken we duidelijk wie welke rol binnen de club vervult.",
       "oplevering": "Meer zichtbare waardering voor vrijwilligers en meer herkenning van de mensen achter de vereniging.",
-      "notitie": "Voorbeeld met fictieve personen en namen. Bij uitvoering worden deze vervangen door echte vrijwilligers.",
+      "notitie": "Voorbeeld met fictieve personen en namen. Bij uitvoering worden deze vervangen door echte vrijwilligers. Hier een goed voorbeeld van vrijwilligers duidelijk terug laten komen op het sportpark, \"deze mensen maken ASV'33\" is een sterke vorm van clubgevoel.",
       "slogan": "Voor en door ASV’ers.",
       "vergelijking": {
         "type": "wissel",
@@ -259,9 +261,9 @@ window.ASV = {
         "alt": "Ontwerp: op de achtermuur van de kantine staat in losse letters ‘ASV’ers, dat zijn wij allen, daarop zijn wij toch zo trots’, met het ASV’33-logo eronder."
       },
       "kaartje": "clublied-ontwerp",
-      "watVeranderen": "We plaatsen een zin uit het clublied als losse metalen letters op afstandspinnen, met het ASV’33-logo eronder.",
+      "watVeranderen": "Een zin uit ons clublied, eentje die sterk verbind, terugkomt en duidelijk maakt waar het voor staat.",
       "citaat": "ASV’ers, dat zijn wij allen, daarop zijn wij toch zo trots",
-      "waarom": "De tekst komt uit het clublied en sluit direct aan bij de identiteit van de vereniging. De losse letters staan iets van de muur af, waardoor diepte en schaduw ontstaan. ASV’ers krijgt een gedempte rode kleur; de overige letters worden wit.",
+      "waarom": "De tekst komt uit het clublied en sluit direct aan bij de identiteit van de vereniging, de losse letters staan iets van de muur af, waardoor diepte en schaduw ontstaan. ASV’ers krijgt een gedempte rode kleur; de overige letters worden wit. Bewust hier niet voor de rode clubkleur gekozen omdat dit niet mooi staat.",
       "oplevering": "Een herkenbare plek die de trots en saamhorigheid van ASV’33 zichtbaar maakt.",
       "vergelijking": {
         "type": "schuif",
