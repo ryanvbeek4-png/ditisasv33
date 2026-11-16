@@ -48,6 +48,23 @@ window.ASV = {
         "uitlijning": "midden"
       },
       "kaartZoom": 1.8,
+      "hoofdbeelden": [
+        {
+          "titel": "Doel linkerkant",
+          "bestand": "veld-c-ontwerp-doel",
+          "alt": "Ontwerp: het doel aan de linkerkant van veld C met een rood-wit net en rood-witte ballenvangerpalen."
+        },
+        {
+          "titel": "Doel rechterkant",
+          "bestand": "veld-c-ontwerp-ballenvanger",
+          "alt": "Ontwerp: het doel aan de rechterkant met een rood-wit net en ballenvangerpalen die onderaan rood en bovenaan wit zijn."
+        },
+        {
+          "titel": "Dug-outs rood geschilderd",
+          "bestand": "veld-c-ontwerp-dugouts",
+          "alt": "Ontwerp: de twee bestaande dug-outs langs veld C rood geschilderd."
+        }
+      ],
       "hoofdbeeld": {
         "bestand": "veld-c-ontwerp-ballenvanger",
         "alt": "Ontwerp van veld C: de ballenvangerpalen zijn onderaan rood en bovenaan wit, het doel heeft een rood-wit net."

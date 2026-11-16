@@ -243,7 +243,7 @@
      DETAILVENSTER
      ===================================================================== */
   var venster = $("#venster"), paneel = $(".venster__paneel", venster), inhoud = $("#vensterInhoud");
-  var huidig = null, laatsteKnop = null, zelfGeopend = false, sluitTimer = null;
+  var huidig = null, huidigeSlides = null, laatsteKnop = null, zelfGeopend = false, sluitTimer = null;
 
   function sectie(titel, html) { return '<section class="d-sectie"><h3>' + esc(titel) + "</h3>" + html + "</section>"; }
   function p(t, pad_) { return "<p" + bw(pad_) + ">" + esc(t) + "</p>"; }
@@ -289,18 +289,32 @@
     var L = ["locaties", i];
     h += '<header class="d-kop"><p class="d-naam"' + bw(L.concat("naam")) + '>' + esc(loc.naam) + '</p><h2 id="vensterTitel"' + bw(L.concat("titel")) + '>' + esc(loc.titel) + "</h2></header>";
 
-    if (loc.id === "tribune") {
+    var slides = null;
+    if (loc.panelen) {
       // fotowand: de zes panelen op de tribunewand
+      slides = loc.panelen.map(function (pn, k) {
+        return { naam: pn.mockup, alt: "Ontwerp tribunewand: " + pn.alt, kop: "Paneel " + (k + 1) + " van " + loc.panelen.length + ": " + pn.titel,
+          sub: herkomstKort(pn.herkomst), badge: "Ons ontwerp · " + loc.wandTitel, pad: L.concat("panelen", k, "mockup"),
+          tekst: (k + 1) + "/" + loc.panelen.length + " · " + pn.titel + " — " + herkomstTekst(pn.herkomst) };
+      });
+    } else if (loc.hoofdbeelden && loc.hoofdbeelden.length) {
+      // slideshow met de vernieuwing
+      slides = loc.hoofdbeelden.map(function (hb, k) {
+        return { naam: hb.bestand, alt: hb.alt, kop: hb.titel || "", sub: "Ontwerp " + (k + 1) + " van " + loc.hoofdbeelden.length,
+          badge: "Ons ontwerp", pad: L.concat("hoofdbeelden", k, "bestand"), titelPad: L.concat("hoofdbeelden", k, "titel"),
+          tekst: "Ons ontwerp — " + (hb.titel || loc.titel) };
+      });
+    }
+    huidigeSlides = slides;
+    if (slides) {
       h += '<div class="carrousel" data-carrousel>' +
-        '<button type="button" class="carrousel__beeld"' + bwImg(L.concat("panelen", 0, "mockup")) + ' data-lb="wand" data-lb-i="0" aria-label="Vergroot ontwerp">' +
-        beeld(loc.panelen[0].mockup, "Ontwerp tribunewand: " + loc.panelen[0].alt, { eager: true }) +
-        '<span class="d-badge">Ons ontwerp · ' + esc(loc.wandTitel) + "</span></button>" +
-        '<div class="carrousel__nav"><button type="button" class="kb" data-car="-1" aria-label="Vorig paneel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 6.4 14 5l-7 7 7 7 1.4-1.4L9.8 12z"/></svg></button>' +
-        '<p class="carrousel__tekst" aria-live="polite"></p>' +
-        '<button type="button" class="kb" data-car="1" aria-label="Volgend paneel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 17.6 10 19l7-7-7-7-1.4 1.4 5.6 5.6z"/></svg></button></div></div>';
-      registreerGroep("wand", loc.panelen.map(function (pn, k) {
-        return { naam: pn.mockup, alt: "Ontwerp tribunewand: " + pn.alt, tekst: (k + 1) + "/6 · " + pn.titel + " — " + herkomstTekst(pn.herkomst) };
-      }));
+        '<button type="button" class="carrousel__beeld" data-lb="wand" data-lb-i="0" aria-label="Vergroot ontwerp">' + beeld(slides[0].naam, slides[0].alt, { eager: true }) + "</button>" +
+        '<div class="carrousel__nav"><button type="button" class="kb" data-car="-1" aria-label="Vorige foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 6.4 14 5l-7 7 7 7 1.4-1.4L9.8 12z"/></svg></button>' +
+        '<div class="carrousel__tekst" aria-live="polite"></div>' +
+        '<button type="button" class="kb" data-car="1" aria-label="Volgende foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 17.6 10 19l7-7-7-7-1.4 1.4 5.6 5.6z"/></svg></button></div>' +
+        '<div class="carrousel__stippen" aria-hidden="true">' + slides.map(function () { return "<span></span>"; }).join("") + "</div></div>";
+      registreerGroep("wand", slides.map(function (sl) { return { naam: sl.naam, alt: sl.alt, tekst: sl.tekst }; }));
+      if (loc.notitie) h += '<div class="d-sectie" style="padding-bottom:0"><p class="d-notitie"' + bw(L.concat("notitie")) + '>' + esc(loc.notitie) + "</p></div>";
     } else {
       h += '<button type="button" class="d-hoofd"' + bwImg(L.concat("hoofdbeeld", "bestand")) + ' data-lb="hoofd" data-lb-i="0" aria-label="Vergroot ontwerp">' +
         beeld(loc.hoofdbeeld.bestand, loc.hoofdbeeld.alt, { eager: true }) +
@@ -415,17 +429,19 @@
       tabs.forEach(function (t, j) { t.setAttribute("aria-selected", String(j === k)); t.tabIndex = j === k ? 0 : -1; });
       $$('[role="tabpanel"]', inhoud).forEach(function (p_, j) { p_.hidden = j !== k; });
     }
-    // carrousel tribune
+    // carrousel (tribune-wand of slideshow van de vernieuwing)
     var car = $("[data-carrousel]", inhoud);
     if (car) {
-      var n = 0, pn = loc.panelen;
+      var n = 0, sl = huidigeSlides;
       var zet = function (k) {
-        n = (k + pn.length) % pn.length;
-        var knop = $(".carrousel__beeld", car);
+        n = (k + sl.length) % sl.length;
+        var knop = $(".carrousel__beeld", car), s_ = sl[n];
         knop.setAttribute("data-lb-i", n);
-        knop.setAttribute("data-bewerk-img", JSON.stringify(["locaties", LOC.indexOf(loc), "panelen", n, "mockup"]));
-        knop.innerHTML = beeld(pn[n].mockup, "Ontwerp tribunewand: " + pn[n].alt) + '<span class="d-badge">Ons ontwerp · ' + esc(loc.wandTitel) + "</span>";
-        $(".carrousel__tekst", car).innerHTML = "<strong>Paneel " + (n + 1) + " van " + pn.length + ": " + esc(pn[n].titel) + "</strong>" + esc(herkomstKort(pn[n].herkomst));
+        knop.setAttribute("data-bewerk-img", JSON.stringify(s_.pad));
+        knop.innerHTML = beeld(s_.naam, s_.alt) + '<span class="d-badge">' + esc(s_.badge) + "</span>";
+        $(".carrousel__tekst", car).innerHTML = "<strong" + (s_.titelPad ? bw(s_.titelPad) : "") + ">" + esc(s_.kop) + "</strong><span>" + esc(s_.sub) + "</span>";
+        $$(".carrousel__stippen span", car).forEach(function (d, j) { d.classList.toggle("aan", j === n); });
+        if (window.ASVBewerk) window.ASVBewerk.vernieuw();
       };
       $$("[data-car]", car).forEach(function (b) { b.addEventListener("click", function () { zet(n + Number(b.getAttribute("data-car"))); }); });
       // vegen over de foto = volgend/vorig paneel
