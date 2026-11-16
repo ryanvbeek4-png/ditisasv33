@@ -288,7 +288,8 @@ body.zonder-scroll{overflow:hidden}
   .locaties{grid-area:loc;padding:26px 0 10px;max-width:none;margin:0}
   .kaarten{grid-template-columns:1fr;gap:10px}
   .lk{flex-direction:row;align-items:stretch}
-  .lk__beeld{flex:none;width:118px;aspect-ratio:auto}
+  .lk__beeld{flex:none;width:118px;aspect-ratio:auto;position:relative;min-height:84px}
+  .lk__beeld img{position:absolute;inset:0}
   .lk__tekst{padding:12px 14px;align-items:center}
   .venster__paneel{left:0;right:auto;transform:translateX(-102%);box-shadow:12px 0 40px rgba(0,0,0,.25)}
   .voet{max-width:1400px;padding-left:24px;padding-right:24px}
