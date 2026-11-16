@@ -72,13 +72,13 @@ window.ASV = {
         "alt": "Ontwerp van veld C: de ballenvangerpalen zijn onderaan rood en bovenaan wit, het doel heeft een rood-wit net."
       },
       "kaartje": "veld-c-ontwerp-doel",
-      "watVeranderen": "We schilderen de ballenvangerpalen rood wit, vervangen de twee doelnetten door rood witte netten en schilderen de twee bestaande dug-outs rood. Ook op het laatste veld zul je dan veel meer opvulling zien dan alleen een veld met belijning en twee groene dug outs...",
+      "watVeranderen": "We schilderen de ballenvangerpalen rood-wit, vervangen de twee doelnetten door rood-witte netten en schilderen de twee bestaande dug-outs rood. Ook op het laatste veld zul je dan veel meer opvulling zien dan alleen een veld met belijning en twee groene dug-outs...",
       "waarom": "We willen dat ook veld C duidelijk bij ASV’33 hoort, door onze clubkleuren terug te laten komen, ontstaat meer samenhang met de rest van het sportpark. We behouden de bestaande dug-outs en knappen ze enkel op, zodat we kosten beperken en bestaande voorzieningen hergebruiken.",
       "oplevering": "Een verzorgder en herkenbaarder veld met een duidelijke ASV’33 uitstraling. En eerlijk is eerlijk, de verbetering is duidelijk zichtbaar.",
       "onderdelen": [
         {
           "naam": "Doel linkerkant",
-          "uitleg": "Een Rood Wit doelnet met rood witte palen, een duidelijke verbetering aan een veld dat heel neutraal is.",
+          "uitleg": "Een rood-wit doelnet met rood-witte palen, een duidelijke verbetering aan een veld dat heel neutraal is.",
           "type": "wissel",
           "huidig": {
             "bestand": "veld-c-huidig-doel",
@@ -91,7 +91,7 @@ window.ASV = {
         },
         {
           "naam": "Doel rechterkant",
-          "uitleg": "Een Rood Wit doelnet met rood witte palen, een duidelijke verbetering aan een veld dat heel neutraal is.",
+          "uitleg": "Een rood-wit doelnet met rood-witte palen, een duidelijke verbetering aan een veld dat heel neutraal is.",
           "type": "wissel",
           "huidig": {
             "bestand": "veld-c-huidig-ballenvanger",
@@ -104,7 +104,7 @@ window.ASV = {
         },
         {
           "naam": "Dug-outs",
-          "uitleg": "De twee bestaande dug-outs worden rood geschilderd, hierdoor krijg je toch meer de indruk dat het een bij behorend veld i.",
+          "uitleg": "De twee bestaande dug-outs worden rood geschilderd, hierdoor krijg je toch meer de indruk dat het een bijbehorend veld is.",
           "type": "schuif",
           "huidig": {
             "bestand": "veld-c-vergelijk-dugouts-voor",
@@ -120,7 +120,7 @@ window.ASV = {
     {
       "id": "tribune",
       "naam": "Tribune",
-      "titel": "Clubgevoel terug te zien op foto`s",
+      "titel": "Clubgevoel terug te zien op foto’s",
       "x": 0.6716,
       "y": 0.4224,
       "label": {
