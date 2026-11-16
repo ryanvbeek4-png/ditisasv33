@@ -7,7 +7,7 @@
 <meta name="description" content="Bekijk de plannen voor sportpark De Hut van ASV’33 in Aarle-Rixtel. Een schoolproject.">
 <meta name="theme-color" content="#9e1b26">
 <link rel="icon" type="image/png" href="img/logo-asv33.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 <a class="skip" href="#locaties">Direct naar de locaties</a>
@@ -104,8 +104,18 @@
 
 <noscript><p class="geenjs">Deze website heeft JavaScript nodig voor de interactieve kaart. Zet JavaScript aan om de plannen te bekijken.</p></noscript>
 
-<script src="inhoud.js"></script>
-<script src="app.js"></script>
-<script src="bewerken.js"></script>
+<script>
+/* Laadt altijd de nieuwste versie (geen oude kopie uit de browser) */
+(function () {
+  var v = Date.now(), lijst = ["inhoud.js", "app.js", "bewerken.js"];
+  (function volgende() {
+    if (!lijst.length) return;
+    var s = document.createElement("script");
+    s.src = lijst.shift() + "?v=" + v; s.onload = volgende;
+    s.onerror = function () { if (s.src.indexOf("inhoud.js") > -1) document.body.insertAdjacentHTML("afterbegin", '<p class="geenjs">inhoud.js kon niet worden geladen.</p>'); else volgende(); };
+    document.body.appendChild(s);
+  })();
+})();
+</script>
 </body>
 </html>
