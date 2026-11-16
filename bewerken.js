@@ -4,7 +4,13 @@
 (function () {
   "use strict";
   var lokaal = location.protocol === "file:" || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
-  if (!lokaal || !window.ASV || !window.ASVIntern) return;
+  // Online (GitHub Pages): alleen zichtbaar via de geheime link #bewerken of als jouw sleutel al op dit apparaat staat
+  var GH = /\.github\.io$/.test(location.hostname) ? { eigenaar: location.hostname.split(".")[0], repo: (location.pathname.split("/")[1] || "") } : null;
+  var SLEUTEL = "asv33-github-sleutel";
+  function leesS() { try { return localStorage.getItem(SLEUTEL) || ""; } catch (e) { return ""; } }
+  var online = !!(GH && GH.repo && (location.hash === "#bewerken" || leesS()));
+  if ((!lokaal && !online) || !window.ASV || !window.ASVIntern) return;
+  var opslagTekst = online ? "Opslaan op de website" : "Opslaan op deze pc";
 
   var D = window.ASV, I = window.ASVIntern;
   var KOP = "/* =====================================================================\n" +
@@ -55,7 +61,7 @@
   var balk = document.createElement("div");
   balk.className = "bw-balk"; balk.hidden = true; balk.setAttribute("role", "region"); balk.setAttribute("aria-label", "Bewerkmodus");
   balk.innerHTML = '<span class="bw-uitleg"><strong>Bewerkmodus</strong> · klik op een tekst om te typen of op een foto om hem te vervangen. <span class="bw-teller"></span></span>' +
-    '<button type="button" class="bw-opslaan" disabled>Opslaan op deze pc</button><button type="button" class="bw-stop">Klaar</button>';
+    '<button type="button" class="bw-opslaan" disabled>' + opslagTekst + '</button>' + (online ? '<button type="button" class="bw-uit">Sleutel wissen</button>' : '') + '<button type="button" class="bw-stop">Klaar</button>';
   document.body.appendChild(balk);
 
   var melding = document.createElement("div");
@@ -88,12 +94,12 @@
   }
   window.ASVBewerk = { vernieuw: vernieuw };
 
-  function start() { aan = true; document.body.classList.add("bewerkmodus"); balk.hidden = false; knop.hidden = true; vernieuw(); teller(); meld("Bewerkmodus aan. Wijzigingen zie je meteen; klik daarna op ‘Opslaan op deze pc’."); }
+  function start() { aan = true; document.body.classList.add("bewerkmodus"); balk.hidden = false; knop.hidden = true; vernieuw(); teller(); meld("Bewerkmodus aan. Wijzigingen zie je meteen; klik daarna op ‘" + opslagTekst + "’."); }
   function stop() {
-    if (Object.keys(gewijzigd).length + Object.keys(nieuweFotos).length) { meld("Je hebt nog niet opgeslagen. Klik eerst op ‘Opslaan op deze pc’."); return; }
+    if (Object.keys(gewijzigd).length + Object.keys(nieuweFotos).length) { meld("Je hebt nog niet opgeslagen. Klik eerst op ‘" + opslagTekst + "’."); return; }
     aan = false; document.body.classList.remove("bewerkmodus"); balk.hidden = true; knop.hidden = false; vernieuw();
   }
-  knop.addEventListener("click", start);
+  knop.addEventListener("click", function () { if (online && !leesS()) vraagSleutel(start); else start(); });
   $(".bw-stop", balk).addEventListener("click", stop);
 
   /* ---------- tekst typen ---------- */
@@ -163,6 +169,7 @@
   }
   async function opslaan() {
     var knopO = $(".bw-opslaan", balk);
+    if (online) return opslaanOnline(knopO);
     if (window.showDirectoryPicker) {
       try {
         if (!mapHandle) {
@@ -182,7 +189,7 @@
       } catch (err) {
         if (err && err.name === "AbortError") { meld("Opslaan geannuleerd."); }
         else { meld("Opslaan lukte niet (" + (err && err.message || err) + "). De bestanden worden nu gedownload."); downloadAlles(); }
-      } finally { knopO.textContent = "Opslaan op deze pc"; teller(); }
+      } finally { knopO.textContent = opslagTekst; teller(); }
     } else downloadAlles();
   }
   function download(naam, blob) {
@@ -202,6 +209,75 @@
     teller();
   }
   $(".bw-opslaan", balk).addEventListener("click", opslaan);
+
+  /* ---------- online opslaan via GitHub (alleen met jouw sleutel) ---------- */
+  function api(pad, opties) {
+    opties = opties || {};
+    return fetch("https://api.github.com/repos/" + GH.eigenaar + "/" + GH.repo + pad, {
+      method: opties.method || "GET",
+      headers: { "Authorization": "Bearer " + leesS(), "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
+      body: opties.body ? JSON.stringify(opties.body) : undefined, cache: "no-store"
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var f = new Error(j.message || ("HTTP " + r.status)); f.status = r.status; throw f; } return j; }); });
+  }
+  function naarBase64Tekst(t) { var bytes = new TextEncoder().encode(t), s = ""; for (var i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(s); }
+  function naarBase64Blob(blob) { return new Promise(function (ok, nee) { var r = new FileReader(); r.onload = function () { ok(String(r.result).split(",")[1]); }; r.onerror = nee; r.readAsDataURL(blob); }); }
+  async function schrijfOnline(pad, base64, bericht) {
+    var sha; try { sha = (await api("/contents/" + pad + "?ref=main")).sha; } catch (e) { if (e.status !== 404) throw e; }
+    await api("/contents/" + pad, { method: "PUT", body: { message: bericht, content: base64, sha: sha, branch: "main" } });
+  }
+  async function opslaanOnline(knopO) {
+    knopO.disabled = true;
+    try {
+      var namen = Object.keys(nieuweFotos);
+      for (var i = 0; i < namen.length; i++) {
+        knopO.textContent = "Foto " + (i + 1) + " van " + namen.length + " uploaden…";
+        await schrijfOnline("img/" + namen[i], await naarBase64Blob(nieuweFotos[namen[i]]), "Foto vervangen via de bewerkmodus");
+      }
+      knopO.textContent = "Teksten opslaan…";
+      await schrijfOnline("inhoud.js", naarBase64Tekst(code()), "Teksten aangepast via de bewerkmodus");
+      klaar();
+      meld("Opgeslagen ✔ Over ongeveer 1 minuut ziet iedereen de wijziging (ververs met Ctrl + F5).", true);
+    } catch (err) {
+      if (err.status === 401 || err.status === 403 || err.status === 404) meld("De sleutel werkt niet (meer) of heeft geen schrijfrecht. Klik op ‘Sleutel wissen’ en vul een nieuwe in.", true);
+      else meld("Opslaan lukte niet: " + (err.message || err) + ". Je wijzigingen staan nog op je scherm; probeer het opnieuw.", true);
+    } finally { knopO.textContent = opslagTekst; teller(); }
+  }
+  function vraagSleutel(daarna) {
+    var v = document.createElement("div");
+    v.setAttribute("role", "dialog"); v.setAttribute("aria-modal", "true"); v.setAttribute("aria-label", "Sleutel invullen");
+    v.style.cssText = "position:fixed;inset:0;z-index:100;background:rgba(20,22,26,.6);display:flex;align-items:center;justify-content:center;padding:16px;font:16px/1.5 Inter,system-ui,sans-serif";
+    var url = "https://github.com/settings/personal-access-tokens/new";
+    v.innerHTML = '<div style="background:#fff;color:#24272c;border-radius:16px;max-width:520px;width:100%;padding:20px 22px;box-shadow:0 20px 50px rgba(0,0,0,.35)">' +
+      '<h2 style="margin:0 0 8px;font:900 1.3rem Inter,system-ui,sans-serif">Eenmalig: jouw sleutel</h2>' +
+      '<p style="margin:0 0 10px">Met deze sleutel mag alleen jij opslaan. Hij blijft alleen op dit apparaat.</p>' +
+      '<ol style="margin:0 0 12px;padding-left:20px"><li>Open <a href="' + url + '" target="_blank" rel="noopener">deze GitHub-pagina</a>.</li>' +
+      '<li>Token name: <b>bewerken</b> · Expiration: <b>90 days</b>.</li>' +
+      '<li>Repository access: <b>Only select repositories</b> → <b>' + GH.repo + '</b>.</li>' +
+      '<li>Permissions → Repository permissions → <b>Contents</b>: <b>Read and write</b>.</li>' +
+      '<li>Klik <b>Generate token</b>, kopieer de code (begint met <code>github_pat_</code>) en plak hem hieronder.</li></ol>' +
+      '<input type="password" placeholder="github_pat_…" autocomplete="off" style="width:100%;font:inherit;padding:12px;border:2px solid #e4e0db;border-radius:10px">' +
+      '<p class="bw-fout" style="color:#9e1b26;font-weight:600;min-height:1.5em;margin:8px 0"></p>' +
+      '<div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" data-x style="min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid #e4e0db;background:#fff;font:600 15px Inter,system-ui,sans-serif;cursor:pointer">Annuleren</button>' +
+      '<button type="button" data-ok style="min-height:44px;padding:8px 18px;border-radius:999px;border:0;background:#9e1b26;color:#fff;font:700 15px Inter,system-ui,sans-serif;cursor:pointer">Controleren en starten</button></div></div>';
+    document.body.appendChild(v);
+    var inp = $("input", v), fout = $(".bw-fout", v); inp.focus();
+    $("[data-x]", v).addEventListener("click", function () { v.remove(); });
+    $("[data-ok]", v).addEventListener("click", async function () {
+      var t = inp.value.trim(); if (!t) { fout.textContent = "Plak eerst de sleutel."; return; }
+      try { localStorage.setItem(SLEUTEL, t); } catch (e) { fout.textContent = "Deze browser kan de sleutel niet bewaren (privévenster?)."; return; }
+      fout.textContent = "Bezig met controleren…";
+      try {
+        var r = await api("");
+        if (!r.permissions || !r.permissions.push) throw Object.assign(new Error("geen schrijfrecht"), { status: 403 });
+        v.remove(); daarna();
+      } catch (e) {
+        try { localStorage.removeItem(SLEUTEL); } catch (x) {}
+        fout.textContent = "Deze sleutel werkt niet voor " + GH.repo + ". Controleer stap 3 en 4.";
+      }
+    });
+  }
+  var uit = $(".bw-uit", balk);
+  if (uit) uit.addEventListener("click", function () { try { localStorage.removeItem(SLEUTEL); } catch (e) {} meld("Sleutel gewist van dit apparaat."); uit.disabled = true; });
 
   window.addEventListener("beforeunload", function (e) {
     if (Object.keys(gewijzigd).length + Object.keys(nieuweFotos).length) { e.preventDefault(); e.returnValue = ""; }
